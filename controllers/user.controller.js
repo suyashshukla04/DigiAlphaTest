@@ -27,6 +27,13 @@ const registerUser = async(req,res) =>{
 const updateUser = async(req,res) =>  {
     try{
         const id = req.params.id;
+        const userPresent = await User.findById(id);
+        if(!userPresent){
+            return res.status(400).send({
+                message : 'User not found'
+            })
+        }
+
         const obj = {
             
             firstName : req.body.firstName ? req.body.firstName : undefined,
